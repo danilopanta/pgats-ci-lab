@@ -13,7 +13,6 @@ on:
 jobs:
   # nome do job
   e2e-test:
-
     # maquina onde o job será executado
     runs-on: ubuntu-latest
     steps:
@@ -24,14 +23,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
-          
+
       # Instalação do Yarn
       - name: Instalando Yarn
         run: npm install -g yarn
 
       # Instalação das dependências
       - name: Instalando Dependências
-        run: yarn 
+        run: yarn
 
       # Instalação do Playwright
       - name: Instalando Playwright
@@ -40,6 +39,3 @@ jobs:
       # Execução dos testes e2e
       - name: Executando Testes E2E
         run: yarn run e2e
-
-
-

@@ -9,20 +9,19 @@ name: 'Execução por Deploy'
 on:
   workflow_run:
     workflows: ['Execução Manual']
-    types: 
+    types:
       - completed
 
 # trabalho/tarefa dentro do pipeline = job
 jobs:
   # nome do job
   e2e-test:
-
     # maquina onde o job será executado
     runs-on: ubuntu-latest
 
     # condicional - if
     # `${ expressao }`
-    # == comparação 
+    # == comparação
 
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
@@ -34,14 +33,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
-          
+
       # Instalação do Yarn
       - name: Instalando Yarn
         run: npm install -g yarn
 
       # Instalação das dependências
       - name: Instalando Dependências
-        run: yarn 
+        run: yarn
 
       # Instalação do Playwright
       - name: Instalando Playwright
@@ -56,7 +55,3 @@ jobs:
         with:
           name: relatorio
           path: ./playwright-report
-
-
-
-

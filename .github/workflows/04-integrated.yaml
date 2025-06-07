@@ -25,17 +25,17 @@ jobs:
 
       - name: Checando padronizacao do codigo # nome do passo
         run: yarn lint # comando a ser executado
-      
+
   unidade:
-  # maquina onde o job será executado
-    runs-on: ubuntu-latest 
+    # maquina onde o job será executado
+    runs-on: ubuntu-latest
     # lista de passos/tarefas
-    steps: 
+    steps:
       # checkout do repositório
-      - uses: actions/checkout@v4 
+      - uses: actions/checkout@v4
       # instalando o yarn (nodejs) geralmente ja vem instalado (opcional)
       - name: Instalando Yarn
-        run: npm install - g yarn 
+        run: npm install - g yarn
       # instalando as dependencias
       - name: Instalando dependencias
         run: yarn # comando a ser executado
@@ -62,10 +62,10 @@ jobs:
       - name: Instalando Playwright # Instalando o playwright
         run: yarn playwright install
 
-      - name: Executando Testes E2E 
-        run: yarn run e2e  
+      - name: Executando Testes E2E
+        run: yarn run e2e
 
-      - name: Uploading Artifacts  
+      - name: Uploading Artifacts
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }} # condicional - se o job nao for cancelado
         with:
@@ -73,8 +73,8 @@ jobs:
           path: ./playwright-report # caminho do arquivo
 
   deploy:
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy simulation 
-        run: echo 'Deploy application with success!' # mensagem a ser exibida 
+      - name: Deploy simulation
+        run: echo 'Deploy application with success!' # mensagem a ser exibida
