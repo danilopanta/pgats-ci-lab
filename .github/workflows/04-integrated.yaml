@@ -36,7 +36,7 @@ jobs:
     steps: 
       # checkout do repositório
       - uses: actions/checkout@v4 
-      # instalando o yarn
+      # instalando o yarn (nodejs) geralmente ja vem instalado (opcional)
       - name: Instalando Yarn
         run: npm install - g yarn 
       # instalando as dependencias
@@ -74,7 +74,6 @@ jobs:
         with:
           name: relatorio-e2e
           path: ./playwright-report
-
 
   deploy:
     runs-on: ubuntu-latest # maquina onde o job será executado
