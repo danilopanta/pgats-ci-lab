@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4 # checkout do repositório
 
       - name: Instalando Yarn # nome do passo
-        run: npm install - g yarn # comando a ser executado
+        run: npm install -g yarn # comando a ser executado
 
       - name: Instalando dependencias # nome do passo
         run: yarn # comando a ser executado
