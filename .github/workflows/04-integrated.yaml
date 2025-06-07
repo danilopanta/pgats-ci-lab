@@ -1,0 +1,83 @@
+# CI De Nível 04 - Disparo dos testes  dentro do pipeline de DEV
+
+
+
+
+# nome do 'pipeline'
+name: 'Execução Integrada'
+
+# regras de disparo (gatilhos/trigger)
+#gatilho de execução manual = workflow_dispatch
+
+on:
+  workflow_dispatch:
+    workflows: ['Execução Manual']
+    types: 
+      - completed
+
+# trabalho/tarefa dentro do pipeline = job
+jobs:
+  inspecao:
+    runs-on: ubuntu-latest # maquina onde o job será executado
+
+    steps: # lista de passos/tarefas
+      - uses: actions/checkout@v4 # checkout do repositório
+
+      - name: Instalando Yarn # nome do passo
+        run: npm install - g yarn # comando a ser executado
+
+      - name: Instalando dependencias # nome do passo
+        run: yarn # comando a ser executado
+
+      - name: Checando padronizacao do codigo # nome do passo
+        run: yarn lint # comando a ser executado
+      
+
+  unidade:
+    runs-on: ubuntu-latest # maquina onde o job será executado
+
+    steps: # lista de passos/tarefas
+      - uses: actions/checkout@v4 # checkout do repositório
+
+      - name: Instalando Yarn # nome do passo
+        run: npm install - g yarn # comando a ser executado
+
+      - name: Instalando dependencias # nome do passo
+        run: yarn # comando a ser executado
+
+      - name: Executando Testes de Unidade # nome do passo
+        run: yarn run test # comando a ser executado
+
+  e2e-test:
+    runs-on: ubuntu-latest # maquina onde o job será executado
+
+    steps:
+      - uses: actions/checkout@v4 # checkout do repositório
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Instalando Yarn # Instalando o yarn
+        run: npm install -g yarn
+
+      - name: Instalando Playwright # Instalando o playwright
+        run: yarn playwright install
+
+      - name: Executando Testes E2E # nome do passo
+        run: yarn run e2e # comando a ser executado
+
+      - name: Uploading Artifacts # nome do passo
+        uses: actions/upload-artifact@v4 # comando a ser executado
+        if: ${{ always() }}
+        with:
+          name: relatorio-e2e
+          path: ./playwright-report
+
+
+  deploy:
+    runs-on: ubuntu-latest # maquina onde o job será executado
+
+    steps:
+      - name: Deploy simulation # nome do passo
+        run: echo 'Deploy application' # comando a ser executado
