@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       # instalando o yarn (nodejs) geralmente ja vem instalado (opcional)
       - name: Instalando Yarn
-        run: npm install - g yarn
+        run: npm install -g yarn
       # instalando as dependencias
       - name: Instalando dependencias
         run: yarn # comando a ser executado
