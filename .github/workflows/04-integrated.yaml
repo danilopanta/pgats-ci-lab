@@ -8,9 +8,6 @@ name: 'Execução Integrada'
 
 on:
   workflow_dispatch:
-    workflows: ['Execução Manual']
-    types: 
-      - completed
 
 # trabalho/tarefa dentro do pipeline = job
 jobs:
@@ -65,19 +62,19 @@ jobs:
       - name: Instalando Playwright # Instalando o playwright
         run: yarn playwright install
 
-      - name: Executando Testes E2E # nome do passo
-        run: yarn run e2e # comando a ser executado
+      - name: Executando Testes E2E 
+        run: yarn run e2e  
 
-      - name: Uploading Artifacts # nome do passo
-        uses: actions/upload-artifact@v4 # comando a ser executado
-        if: ${{ !cancelled() }}
+      - name: Uploading Artifacts  
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }} # condicional - se o job nao for cancelado
         with:
-          name: relatorio-e2e
-          path: ./playwright-report
+          name: relatorio-e2e # nome do arquivo
+          path: ./playwright-report # caminho do arquivo
 
   deploy:
-    runs-on: ubuntu-latest # maquina onde o job será executado
+    runs-on: ubuntu-latest  
 
     steps:
-      - name: Deploy simulation # nome do passo
-        run: echo 'Deploy application' # comando a ser executado
+      - name: Deploy simulation 
+        run: echo 'Deploy application with success!' # mensagem a ser exibida 
