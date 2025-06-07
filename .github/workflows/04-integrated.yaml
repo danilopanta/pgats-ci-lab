@@ -1,8 +1,5 @@
 # CI De Nível 04 - Disparo dos testes  dentro do pipeline de DEV
 
-
-
-
 # nome do 'pipeline'
 name: 'Execução Integrada'
 
@@ -32,21 +29,22 @@ jobs:
       - name: Checando padronizacao do codigo # nome do passo
         run: yarn lint # comando a ser executado
       
-
   unidade:
-    runs-on: ubuntu-latest # maquina onde o job será executado
-
-    steps: # lista de passos/tarefas
-      - uses: actions/checkout@v4 # checkout do repositório
-
-      - name: Instalando Yarn # nome do passo
-        run: npm install - g yarn # comando a ser executado
-
-      - name: Instalando dependencias # nome do passo
+  # maquina onde o job será executado
+    runs-on: ubuntu-latest 
+    # lista de passos/tarefas
+    steps: 
+      # checkout do repositório
+      - uses: actions/checkout@v4 
+      # instalando o yarn
+      - name: Instalando Yarn
+        run: npm install - g yarn 
+      # instalando as dependencias
+      - name: Instalando dependencias
         run: yarn # comando a ser executado
-
-      - name: Executando Testes de Unidade # nome do passo
-        run: yarn run test # comando a ser executado
+      # executando os testes de unidade
+      - name: Executando Testes de Unidade
+        run: yarn test
 
   e2e-test:
     runs-on: ubuntu-latest # maquina onde o job será executado
@@ -61,6 +59,9 @@ jobs:
       - name: Instalando Yarn # Instalando o yarn
         run: npm install -g yarn
 
+      - name: Instalando dependencias
+        run: yarn
+
       - name: Instalando Playwright # Instalando o playwright
         run: yarn playwright install
 
@@ -69,7 +70,7 @@ jobs:
 
       - name: Uploading Artifacts # nome do passo
         uses: actions/upload-artifact@v4 # comando a ser executado
-        if: ${{ always() }}
+        if: ${{ !cancelled() }}
         with:
           name: relatorio-e2e
           path: ./playwright-report
